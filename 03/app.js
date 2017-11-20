@@ -59,7 +59,7 @@ function init() {
 	const matrixLoc = gl.getUniformLocation(program, "transformMatrix");
 	gl.uniformMatrix4fv(matrixLoc, false, new Float32Array(transformMatrix));
 
-	document.addEventListener("keypress", (e) => {
+	document.addEventListener("keydown", (e) => {
 		console.log(e);
 		if (e.key === 'ArrowUp') {
 			moveForward(transformMatrix);

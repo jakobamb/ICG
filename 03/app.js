@@ -1,8 +1,8 @@
 let gl;
 // Declare arrays with global scope to make them accessible throughout the entire program
 
-const MOUTH_ANGLE = 45;
-const NR_OF_VERTICES = 12;
+const MOUTH_ANGLE = 55;
+const NR_OF_VERTICES = 18;
 const RADIUS = 3; 
 const TURN_ANGLE = 1;
 
@@ -15,6 +15,8 @@ let transformMatrix = [
 	0, 0, 1.0, 0,
 	0, 0, 0, 1.0,
 ];
+//angle for rotation
+let angle = 0;
 
 function init() {
 	//fill arrays with vertex data for pacman
@@ -116,19 +118,21 @@ function buildPacman(radius, n, mouthAngle) {
 }
 
 function moveForward(matrix) {
-	matrix[3] += .1;
+	matrix[3] += 0.1 * Math.cos(angle * (Math.PI/180));
+	matrix[7] += 0.1 * Math.sin(angle * (Math.PI/180));
 }
 
 function rotate(matrix,direction) {
-	let angle = TURN_ANGLE;
 	if (direction === 1) {
 		//rotate clockwise
-		angle = 0 - angle;
+		angle--;
+	} else {
+		angle++;
 	}
-	matrix[0] += Math.cos(TURN_ANGLE * (Math.PI/180));
-	matrix[1] += 0 - Math.sin(TURN_ANGLE * (Math.PI/180));
-	matrix[4] += Math.sin(TURN_ANGLE * (Math.PI/180));
-	matrix[5] += Math.cos(TURN_ANGLE * (Math.PI/180));
+	matrix[0] = Math.cos(angle * (Math.PI/180));
+	matrix[1] = 0 - Math.sin(angle * (Math.PI/180));
+	matrix[4] = Math.sin(angle * (Math.PI/180));
+	matrix[5] = Math.cos(angle * (Math.PI/180));
 }
 
 init();

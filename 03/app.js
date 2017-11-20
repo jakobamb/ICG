@@ -3,7 +3,7 @@ let gl;
 
 const MOUTH_ANGLE = 45;
 const NR_OF_VERTICES = 12;
-const RADIUS = 9; 
+const RADIUS = 3; 
 const TURN_ANGLE = 1;
 
 let positions = [];
@@ -116,8 +116,7 @@ function buildPacman(radius, n, mouthAngle) {
 }
 
 function moveForward(matrix) {
-	matrix[3]++;
-	matrix[7]++;
+	matrix[3] += .1;
 }
 
 function rotate(matrix,direction) {

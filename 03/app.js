@@ -10,13 +10,11 @@ let positions = [];
 
 //matrix for transformation
 let transformMatrix = [
-	1.0, 1.0, 1.0, 1.0,
-	1.0, 1.0, 1.0, 1.0,
-	1.0, 1.0, 1.0, 1.0,
-	1.0, 1.0, 1.0, 1.0,
+	1.0, 0, 0, 0,
+	0, 1.0, 0, 0,
+	0, 0, 1.0, 0,
+	0, 0, 0, 1.0,
 ];
-
-console.log(transformMatrix);
 
 function init() {
 	//fill arrays with vertex data for pacman
@@ -67,9 +65,11 @@ function init() {
 			moveForward(transformMatrix);
 			gl.uniformMatrix4fv(matrixLoc, false, new Float32Array(transformMatrix));
 		} else if (e.key === 'ArrowLeft') {
-			rotate(transformMatrix)
+			rotate(transformMatrix);
+			gl.uniformMatrix4fv(matrixLoc, false, new Float32Array(transformMatrix));
 		} else if (e.key === 'ArrowRight') {
-			
+			rotate(transformMatrix,1);
+			gl.uniformMatrix4fv(matrixLoc, false, new Float32Array(transformMatrix));
 		}
 	});
 

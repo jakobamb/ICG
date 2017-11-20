@@ -120,6 +120,12 @@ function buildPacman(radius, n, mouthAngle) {
 function moveForward(matrix) {
 	matrix[3] += 0.1 * Math.cos(angle * (Math.PI/180));
 	matrix[7] += 0.1 * Math.sin(angle * (Math.PI/180));
+
+	//prevent pacman from leaving the canvas
+	matrix[3] = matrix[3] > 1 - RADIUS/10 ? 1 - RADIUS/10 : matrix[3];
+	matrix[3] = matrix[3] < -1 + RADIUS/10 ? -1 + RADIUS/10 : matrix[3];
+	matrix[7] = matrix[7] > 1 - RADIUS/10 ? 1 - RADIUS/10 : matrix[7];
+	matrix[7] = matrix[7] < -1 + RADIUS/10 ? -1 + RADIUS/10 : matrix[7];
 }
 
 function rotate(matrix,direction) {

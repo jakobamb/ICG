@@ -117,6 +117,7 @@ function buildPacman(radius, n, mouthAngle) {
 	}
 }
 
+
 function moveForward(matrix) {
 	matrix[3] += 0.1 * Math.cos(angle * (Math.PI/180));
 	matrix[7] += 0.1 * Math.sin(angle * (Math.PI/180));
@@ -128,6 +129,8 @@ function moveForward(matrix) {
 	matrix[7] = matrix[7] < -1 + RADIUS/10 ? -1 + RADIUS/10 : matrix[7];
 }
 
+//rotation by one degree
+//if direction === 1 clockwise, otherwise counterclockwise
 function rotate(matrix,direction) {
 	if (direction === 1) {
 		//rotate clockwise
@@ -136,7 +139,7 @@ function rotate(matrix,direction) {
 		angle++;
 	}
 	matrix[0] = Math.cos(angle * (Math.PI/180));
-	matrix[1] = 0 - Math.sin(angle * (Math.PI/180));
+	matrix[1] = -Math.sin(angle * (Math.PI/180));
 	matrix[4] = Math.sin(angle * (Math.PI/180));
 	matrix[5] = Math.cos(angle * (Math.PI/180));
 }

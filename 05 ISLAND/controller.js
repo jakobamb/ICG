@@ -3,8 +3,8 @@ function initController() {
     document.addEventListener("keydown", (e) => {
         switch(e.key) {
             case 'w':
-                console.log("forward");
-                viewMatrix = mat4.translate(viewMatrix, viewMatrix, vec3.fromValues(2,0,0));
+                vec3.sub(eye,eye,target);
+                mat4.lookAt(viewMatrix, eye, target, up);
                 break;
             case 's':
                 console.log("backward");
@@ -17,4 +17,5 @@ function initController() {
                 break;
         }
     });
+    gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);
 }

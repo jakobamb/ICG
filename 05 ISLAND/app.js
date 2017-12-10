@@ -80,8 +80,8 @@ function init() {
 	modelMatrixLoc = gl.getUniformLocation(program, "modelMatrix");
 
     // Set view matrix
-	eye = vec3.fromValues(5.0, 2.0, 9.0);
-	target = vec3.fromValues(0.0, 0.0, 0.0);
+	eye = vec3.fromValues(0, 2, 9.0);
+	target = vec3.fromValues(eye[0], eye[1], eye[2] - 1);
 	up = vec3.fromValues(0.0, 1.0, 0.0);
 
 	viewMatrix = mat4.create();

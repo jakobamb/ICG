@@ -1,29 +1,42 @@
-let addvec1 = vec3.fromValues(-5/9,0.0,-1.0);
-let addvec2 = vec3.fromValues(5/9,0.0,1.0);
-let addvec3 = vec3.fromValues(-1.0,0.0,5/9);
-let addvec4 = vec3.fromValues(1.0,0.0,-5/9);
-
 function initController() {
+
     //keyboard events
+    let direction;
     document.addEventListener("keydown", (e) => {
+        direction = vec3.sub(vec3.create(), target, eye);
         switch(e.key) {
             case 'w':
-                mat4.lookAt(viewMatrix, vec3.add(eye, eye, addvec1), vec3.add(target, target, addvec1), up);
                 console.log("forward");
                 break;
             case 's':
-                mat4.lookAt(viewMatrix, vec3.add(eye, eye, addvec2), vec3.add(target, target, addvec2), up);
                 console.log("backward");
+                vec3.rotateY(direction, direction, vec3.fromValues(0.0,0.0,0.0),Math.PI);
                 break;
             case 'a':
-                mat4.lookAt(viewMatrix, vec3.add(eye, eye, addvec3), vec3.add(target, target, addvec3), up);
                 console.log("left");
+                vec3.rotateY(direction, direction, vec3.fromValues(0.0,0.0,0.0),Math.PI * 0.5);
                 break;
             case 'd':
-                mat4.lookAt(viewMatrix, vec3.add(eye, eye, addvec4), vec3.add(target, target, addvec4), up);
                 console.log("right");
+                vec3.rotateY(direction, direction, vec3.fromValues(0.0,0.0,0.0),Math.PI * 1.5);
                 break;
         }
+        mat4.lookAt(viewMatrix,
+            vec3.add(eye, eye , direction),
+            vec3.add(target, target , direction),
+            up);
+        gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);
+    });
+
+    //Mouselook
+    let lastMousePos = 0;
+    document.addEventListener("mousemove", (e) => {
+        if (e.clientX > lastMousePos) {
+            mat4.lookAt(viewMatrix, eye, vec3.rotateY(target,target, eye,-0.02),up);
+        } else {
+           mat4.lookAt(viewMatrix, eye, vec3.rotateY(target,target, eye,0.02),up);
+        }
+        lastMousePos = e.clientX;
         gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);
     });
 }

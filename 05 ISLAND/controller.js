@@ -26,5 +26,4 @@ function initController() {
         }
         gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);
     });
-    
 }

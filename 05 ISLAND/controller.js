@@ -7,24 +7,36 @@ function initController() {
         switch(e.key) {
             case 'w':
                 console.log("forward");
+                mat4.lookAt(viewMatrix,
+                    vec3.add(eye, eye , direction),
+                    vec3.add(target, target , direction),
+                    up);
                 break;
             case 's':
                 console.log("backward");
                 vec3.rotateY(direction, direction, vec3.fromValues(0.0,0.0,0.0),Math.PI);
+                mat4.lookAt(viewMatrix,
+                    vec3.add(eye, eye , direction),
+                    vec3.add(target, target , direction),
+                    up);
                 break;
             case 'a':
                 console.log("left");
                 vec3.rotateY(direction, direction, vec3.fromValues(0.0,0.0,0.0),Math.PI * 0.5);
+                mat4.lookAt(viewMatrix,
+                    vec3.add(eye, eye , direction),
+                    vec3.add(target, target , direction),
+                    up);                
                 break;
             case 'd':
                 console.log("right");
                 vec3.rotateY(direction, direction, vec3.fromValues(0.0,0.0,0.0),Math.PI * 1.5);
+                mat4.lookAt(viewMatrix,
+                    vec3.add(eye, eye , direction),
+                    vec3.add(target, target , direction),
+                    up);
                 break;
         }
-        mat4.lookAt(viewMatrix,
-            vec3.add(eye, eye , direction),
-            vec3.add(target, target , direction),
-            up);
         gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);
     });
 

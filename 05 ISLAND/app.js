@@ -1,3 +1,7 @@
+/*
+Sorry für die hässlige Insel, wir hatten diese Woche nicht so viel Zeit. :(
+*/
+
 // Environment variables
 let gl,
 	canvas;

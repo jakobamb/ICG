@@ -1,5 +1,5 @@
 /*
-Sorry für die hässlige Insel, wir hatten diese Woche nicht so viel Zeit. :(
+Hallo Susanne, sorry für die hässlige Insel, wir hatten diese Woche nicht so viel Zeit.. :(
 */
 
 // Environment variables

@@ -15,8 +15,8 @@ class Polygon {
 	}
 
 
-	//PENIS
-	
+
+
 	/**
 	 * Sets the model matrix
 	 * @param {Object} position x,y,z

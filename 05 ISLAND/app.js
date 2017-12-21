@@ -66,7 +66,6 @@ function init() {
 		}
 
 	// PalmenBlätter
-
 	for (i = 0; i < 4; i++) {
 		objects.push(new Polygon(from = {x: -1 + i, y: 3.0, z: -0.2 + i }, to = {x: 1.0 *+i, y: 3.2, z: 0.2 + i},
 			sideColors = {front: [0, 1, 0, 1], right: [0, 1, 0, 1], back: [0, 1, 0, 1]
@@ -115,8 +114,8 @@ function render()
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 	// Call every render function
-    objects.forEach(function(object) {
-		object.Render();
+    objects.forEach(function(obj) {
+		obj.render();
 	});
 
 	requestAnimationFrame(render);

@@ -14,6 +14,9 @@ class Polygon {
 		this.initBuffer();
 	}
 
+
+	//PENIS
+	
 	/**
 	 * Sets the model matrix
 	 * @param {Object} position x,y,z

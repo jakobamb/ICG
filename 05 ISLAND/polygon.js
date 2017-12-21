@@ -136,9 +136,7 @@ class Cube extends Polygon {
 		]
 
 		for (let i = 0; Math.floor(i/6) < 6; i++) {
-
 			this.colors = this.colors.concat(Object.values(this.sideColors)[Math.floor(i/6)]);
-
 		}
 	}
 }
@@ -210,9 +208,7 @@ class Palm extends Polygon {
 		]
 
 		for (let i = 0; Math.floor(i/6) < 6; i++) {
-
 			this.colors = this.colors.concat(Object.values(this.sideColors)[Math.floor(i/6)]);
-
 		}
 	}
 }

@@ -50,25 +50,25 @@ function init() {
 	// 3. Specify vertices
 
 		// Wasser aufgespannt auf xz Ebene von -10 bis 10 und 10 tief in y Ebene
-		objects.push(new Cube(from = {x: -10.0, y: 0.0, z: -10.0}, to = {x: 10.0, y: -10.0, z: 10.0},
+		objects.push(new Cube(from = {x: -20.0, y: 0.0, z: -20.0}, to = {x: 20.0, y: -10.0, z: 20.0},
 			sideColors = {front: [0, 0, 1, 1], right: [0, 0, 1, 1], back: [0, 0, 1, 1],
 			left: [0, 0, 1, 1], bottom: [0, 0, 1, 1], top: [0, 0, 1, 1]}));
 	
 		// Insel aufgespannt auf xz Ebene von -3 bis 3 und 0.7 tief in y Ebene
-		objects.push(new Cube(from = {x: -3.0, y: 0.0, z: -3.0}, to = {x: 3.0, y: 0.7, z: 3.0},
+		objects.push(new Cube(from = {x: -7.0, y: 0.0, z: -7.0}, to = {x: 7.0, y: 0.3, z: 7.0},
 			sideColors = {front: [1, 1, 0, 1], right: [1, 1, 0, 1], back: [1, 1, 0, 1],
 			left: [1, 1, 0, 1], bottom: [1, 1, 0, 1], top: [1, 1, 0, 1]}));
 	
-		// Palmenstamm
+		// Palmenstamm 3.1
 		for (i = 0.6; i < 3.1; i += 0.6) {
-		objects.push(new Palm(from = {x: -0.2, y: 0.0, z: -0.2}, to = {x: 0.2, y: i, z: 0.2},
+		objects.push(new Palm(from = {x: -0.2, y: 0.0 , z: -0.2}, to = {x: 0.2, y: i +0.3 , z: 0.2},
 			sideColors = {front: [0.5, 0.3, 0, 1], right: [0.5, 0.3, 0, 1], back: [0.5, 0.3, 0, 1],
 			left: [0.5, 0.3, 0, 1], bottom: [0.5, 0.3, 0, 1], top: [0.5, 0.3, 0, 1]}));
 		}
 	
 		// PalmenBlätter
-		for (i = 0; i < 4; i++) {
-			objects.push(new Palm(from = {x: -1 + i, y: 3.0, z: -0.2 + i }, to = {x: 1.0 *+i, y: 3.2, z: 0.2 + i},
+		for (i = 0.3 ; i < 0; i++) {
+			objects.push(new Leaf(from = {x: -0.5 , y: 2.0, z:  3 }, to = {x: 0.5, y: 3.2, z: 2},
 				sideColors = {front: [0, 1, 0, 1], right: [0, 1, 0, 1], back: [0, 1, 0, 1]
 			, left: [0, 1, 0, 1], bottom: [0, 1, 0, 1], top: [0, 1, 0, 1]},));
 		}

@@ -1,4 +1,4 @@
-const speed = 0.03;
+const speed = 0.08;
 
 let keyPressed = {
 	KeyW: false,
@@ -14,7 +14,6 @@ function initController() {
 	document.addEventListener("keyup", keyup);
 	document.addEventListener("mousemove", changeView);
 	canvas.onmousedown = function() {
-    
     canvas.requestPointerLock();
 }
 }

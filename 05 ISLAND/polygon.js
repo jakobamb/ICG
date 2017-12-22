@@ -9,7 +9,9 @@ class Polygon {
 		this.colors = [];
 		this.orientation = {x: 0, y: 0, z: 0};
 		this.position = {x: 0, y: 0, z: 0};
-		this.verticesVBO = gl.createBuffer();
+		this.verticesVBO = gl.createBuffer(
+
+		);
 		this.setModelMatrix(this.position, this.orientation);
 
 

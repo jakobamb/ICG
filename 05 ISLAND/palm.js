@@ -1,8 +1,11 @@
 class Palm extends Polygon {
 
 
-	constructor() {
-		super();
+    constructor(fx,fy,fz,tx,ty,tz
+                ,scfront, scright, scback, scleft, scbottom, sctop) {
+
+        super(fx,fy,fz,tx,ty,tz
+            ,scfront, scright, scback, scleft, scbottom, sctop);
 		this.makePalm();
 		this.initBuffer();
 	}
@@ -72,8 +75,10 @@ class Palm extends Polygon {
 
 class Leaf extends Polygon {
 
-    constructor() {
-		super();
+    constructor (fx,fy,fz,tx,ty,tz
+    ,scfront, scright, scback, scleft, scbottom, sctop) {
+		super(fx,fy,fz,tx,ty,tz
+            ,scfront, scright, scback, scleft, scbottom, sctop);
 		this.makePalm();
 		this.initBuffer();
 	}

@@ -14,7 +14,7 @@ let program;
 
 let pointLoc,
 	colorLoc;
-	
+
 let modelMatrixLoc;
 
 let viewMatrixLoc,
@@ -26,7 +26,6 @@ let projectionMatrixLoc,
 let eye;
 let target;
 let up;
-
 
 function degToRad (deg) {
 	return deg * Math.PI / 180;
@@ -117,13 +116,8 @@ function render()
     objects.forEach(function(obj) {
 		obj.render();
 	});
-}
 
-function gameLoop() 
-{
-	update();
-	render();
-	requestAnimationFrame(gameLoop);
+	requestAnimationFrame(render);
 }
 
 init ();

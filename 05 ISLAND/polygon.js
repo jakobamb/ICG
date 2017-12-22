@@ -1,6 +1,7 @@
 class Polygon {
 	constructor (from = {x: -0.5, y: -0.5, z: -0.5}, to = {x: 0.5, y: 0.5, z: 0.5},
-		 sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1], left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]},) {
+		 sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1]
+			, left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]},) {
 		this.from = from;
 		this.to = to;
 		this.sideColors = sideColors;
@@ -9,32 +10,30 @@ class Polygon {
 		this.orientation = {x: 0, y: 0, z: 0};
 		this.position = {x: 0, y: 0, z: 0};
 		this.verticesVBO = gl.createBuffer();
-		this.modelMatrix = this.setModelMatrix(this.position, this.orientation);
+		this.setModelMatrix(this.position, this.orientation);
 
-		this.initBuffer();
+
 	}
-
-
-
 
 	/**
 	 * Sets the model matrix
 	 * @param {Object} position x,y,z
 	 * @param {Object} orientation x,y,z - angles in degree
+	 
 	 */
+
 	setModelMatrix (position, orientation) {
-		
-		// Convert the orientation to RAD
-		orientation = {x: degToRad(orientation.x), y: degToRad(orientation.y), z: degToRad(orientation.z)};
-	
-		// Set the transformation matrix
-		return [
-			1, 0, 0, 0,
-			0, 1, 0, 0,
-			0, 0, 1, 0,
-			position.x, position.y, position.z, 1
-		];
-	}
+	// Convert the orientation to RAD
+	orientation = {x: degToRad(orientation.x), y: degToRad(orientation.y), z: degToRad(orientation.z)};
+
+	// Set the transformation matrix
+	this.modelMatrix = mat4.create();
+	mat4.translate(this.modelMatrix, this.modelMatrix, [position.x, position.y, position.z]);
+	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.x, [1, 0, 0]);
+	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.y, [0, 1, 0]);
+	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.z, [0, 0, 1]);
+}
+
 
 	/**
 	 * Sets the buffer data
@@ -51,6 +50,7 @@ class Polygon {
 	updateBuffer () {
 		// Push the matrix to the buffer
 		gl.uniformMatrix4fv(modelMatrixLoc, false, new Float32Array(this.modelMatrix));		
+		gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);	
 	}
 
 	render () {
@@ -69,221 +69,5 @@ class Polygon {
 
 		// Draw the object
 		gl.drawArrays(gl.TRIANGLES, 0, this.mesh.length/3);
-	}
-}
-
-class Cube extends Polygon {
-	constructor (from = {x: -0.5, y: -0.5, z: -0.5}, to = {x: 0.5, y: 0.5, z: 0.5}, 
-		sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1], left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]}) {
-		
-		super(from = {x: -0.5, y: -0.5, z: -0.5}, to = {x: 0.5, y: 0.5, z: 0.5}, 
-			sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1], left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]});
-		this.makeCube();	
-	}
-
-	makeCube () {
-		this.mesh = [
-			// Front
-			this.from.x, this.from.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-			this.from.x, this.to.y, this.to.z,
-
-			this.to.x, this.to.y, this.to.z,
-			this.from.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-
-			// Right
-			this.to.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-			this.to.x, this.from.y, this.from.z,
-
-			this.to.x, this.to.y, this.from.z,
-			this.to.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.from.z,
-
-			// Back
-			this.from.x, this.from.y, this.from.z,
-			this.to.x, this.from.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-
-			this.to.x, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-			this.to.x, this.from.y, this.from.z,
-
-			// Left
-			this.from.x, this.to.y, this.to.z,
-			this.from.x, this.from.y, this.to.z,
-			this.from.x, this.from.y, this.from.z,
-
-			this.from.x, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.to.z,
-			this.from.x, this.from.y, this.from.z,
-
-			// Bottom
-			this.from.x, this.from.y, this.to.z,
-			this.from.x, this.from.y, this.from.z,
-			this.to.x, this.from.y, this.to.z,
-
-			this.to.x, this.from.y, this.from.z,
-			this.from.x, this.from.y, this.from.z,
-			this.to.x, this.from.y, this.to.z,
-
-			// Top
-			this.from.x, this.to.y, this.to.z,
-			this.from.x, this.to.y, this.from.z,
-			this.to.x, this.to.y, this.to.z,
-
-			this.to.x, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-			this.to.x, this.to.y, this.to.z
-		]
-
-		for (let i = 0; Math.floor(i/6) < 6; i++) {
-			this.colors = this.colors.concat(Object.values(this.sideColors)[Math.floor(i/6)]);
-		}
-	}
-}
-
-class Palm extends Polygon {
-	constructor (from = {x: -0.5, y: -0.5, z: -0.5}, to = {x: 0.5, y: 0.5, z: 0.5}, 
-		sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1], left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]}) {
-		
-		super(from = {x: -0.5, y: -0.5, z: -0.5}, to = {x: 0.5, y: 0.5, z: 0.5}, 
-			sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1], left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]});
-		this.makePalm();	
-	}
-
-	makePalm () {
-		this.mesh = [
-			// Front
-			this.from.x, this.from.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-			this.from.x, this.to.y, this.to.z,
-
-			this.to.x +0.5, this.to.y, this.to.z,
-			this.from.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-
-			// Right
-			this.to.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-			this.to.x, this.from.y, this.from.z,
-
-			this.to.x+0.5, this.to.y, this.from.z,
-			this.to.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.from.z,
-
-			// Back
-			this.from.x, this.from.y, this.from.z,
-			this.to.x +0.5, this.from.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-
-			this.to.x+0.5, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-			this.to.x, this.from.y, this.from.z,
-
-			// Left
-			this.from.x, this.to.y, this.to.z +0.5,
-			this.from.x, this.from.y, this.to.z,
-			this.from.x, this.from.y, this.from.z,
-
-			this.from.x, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.to.z +0.5,
-			this.from.x, this.from.y, this.from.z,
-
-			// Bottom
-			this.from.x +0.5, this.from.y , this.to.z +0.5,
-			this.from.x +0.5, this.from.y, this.from.z +0.5,
-			this.to.x +0.5, this.from.y, this.to.z +0.5,
-
-			this.to.x +0.5, this.from.y, this.from.z +0.5,
-			this.from.x +0.5, this.from.y , this.from.z +0.5,
-			this.to.x +0.5, this.from.y, this.to.z +0.5,
-
-			// Top
-			this.from.x +0.5, this.to.y, this.to.z +0.5,
-			this.from.x +0.5, this.to.y, this.from.z +0.5,
-			this.to.x +0.5, this.to.y, this.to.z +0.5,
-
-			this.to.x +0.5, this.to.y, this.from.z +0.5,
-			this.from.x +0.5, this.to.y, this.from.z +0.5,
-			this.to.x +0.5, this.to.y, this.to.z +0.5
-		]
-
-		for (let i = 0; Math.floor(i/6) < 6; i++) {
-			this.colors = this.colors.concat(Object.values(this.sideColors)[Math.floor(i/6)]);
-		}
-	}
-}
-
-class Leaf extends Polygon {
-	constructor (from = {x: -0.5, y: -0.5, z: -0.5}, to = {x: 0.5, y: 0.5, z: 0.5}, 
-		sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1], left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]}) {
-		
-		super(from = {x: -0.5, y: -0.5, z: -0.5}, to = {x: 0.5, y: 0.5, z: 0.5}, 
-			sideColors = {front: [0, 0, 1, 1], right: [0, 1, 0, 1], back: [1, 0, 0, 1], left: [1, 1, 0, 1], bottom: [1, 0, 1, 1], top: [0, 1, 1, 1]});
-		this.makeLeaf();	
-	}
-
-	makeLeaf () {
-		this.mesh = [
-			// Front
-			this.from.x, this.from.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-			this.from.x, this.to.y, this.to.z,
-
-			this.to.x, this.to.y, this.to.z,
-			this.from.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-
-			// Right
-			this.to.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.to.z,
-			this.to.x, this.from.y, this.from.z,
-
-			this.to.x, this.to.y, this.from.z,
-			this.to.x, this.to.y, this.to.z,
-			this.to.x, this.from.y, this.from.z,
-
-			// Back
-			this.from.x, this.from.y, this.from.z,
-			this.to.x, this.from.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-
-			this.to.x, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-			this.to.x, this.from.y, this.from.z,
-
-			// Left
-			this.from.x, this.to.y, this.to.z,
-			this.from.x, this.from.y, this.to.z,
-			this.from.x, this.from.y, this.from.z,
-
-			this.from.x, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.to.z,
-			this.from.x, this.from.y, this.from.z,
-
-			// Bottom
-			this.from.x, this.from.y, this.to.z,
-			this.from.x, this.from.y, this.from.z,
-			this.to.x, this.from.y, this.to.z,
-
-			this.to.x, this.from.y, this.from.z,
-			this.from.x, this.from.y, this.from.z,
-			this.to.x, this.from.y, this.to.z,
-
-			// Top
-			this.from.x, this.to.y, this.to.z,
-			this.from.x, this.to.y, this.from.z,
-			this.to.x, this.to.y, this.to.z,
-
-			this.to.x, this.to.y, this.from.z,
-			this.from.x, this.to.y, this.from.z,
-			this.to.x, this.to.y, this.to.z
-		]
-
-		for (let i = 0; Math.floor(i/6) < 6; i++) {
-			this.colors = this.colors.concat(Object.values(this.sideColors)[Math.floor(i/6)]);
-		}
 	}
 }

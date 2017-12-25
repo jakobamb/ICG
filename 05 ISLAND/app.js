@@ -58,7 +58,7 @@ function init() {
 	
 		// Palmenstamm 3.1
 		for (i = 0.6; i < 3.7; i += 0.6) {
-		objects.push(new Palm(from = {x: -0.2, y: 0.0 , z: -0.2}, to = {x: 0.2, y: i +0.3 , z: 0.2},
+		objects.push(new Palm(from = {x: -0.07, y: 0.0 , z: -0.07}, to = {x: 0.2, y: i +0.3 , z: 0.2},
 			sideColors = {front: [0.5, 0.3, 0, 1], right: [0.5, 0.3, 0, 1], back: [0.5, 0.3, 0, 1],
 			left: [0.5, 0.3, 0, 1], bottom: [0.5, 0.3, 0, 1], top: [0.5, 0.3, 0, 1]}));
 		}

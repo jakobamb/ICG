@@ -77,7 +77,7 @@ setModelMatrixLeaf (position, orientation) {
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, this.mesh.length*4);
 		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0
-			, (this.mesh.length*4 +this.colors.length); //?
+			, (this.mesh.length*4 +this.colors.length)); //?
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(colorLoc);
 		gl.enableVertexAttribArray(normalLoc);

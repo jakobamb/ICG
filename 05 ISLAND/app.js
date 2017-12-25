@@ -1,13 +1,10 @@
-/*
-Hallo Susanne, sorry für die hässlige Insel, wir hatten diese Woche nicht so viel Zeit.. :(
-*/
-
 // Environment variables
 let gl,
 	canvas;
 
 // Scene variables
 let objects = [];
+
 
 // Shader variables
 let program;
@@ -50,27 +47,28 @@ function init() {
 	// 3. Specify vertices
 
 		// Wasser aufgespannt auf xz Ebene von -10 bis 10 und 10 tief in y Ebene
-		objects.push(new Cube(from = {x: -20.0, y: 0.0, z: -20.0}, to = {x: 20.0, y: -10.0, z: 20.0},
+		objects.push(new Cube(from = {x: -100.0, y: 0.0, z: -100.0}, to = {x: 100.0, y: -10.0, z: 100.0},
 			sideColors = {front: [0, 0, 1, 1], right: [0, 0, 1, 1], back: [0, 0, 1, 1],
 			left: [0, 0, 1, 1], bottom: [0, 0, 1, 1], top: [0, 0, 1, 1]}));
 	
 		// Insel aufgespannt auf xz Ebene von -3 bis 3 und 0.7 tief in y Ebene
-		objects.push(new Cube(from = {x: -7.0, y: 0.0, z: -7.0}, to = {x: 7.0, y: 0.3, z: 7.0},
+		objects.push(new Cube(from = {x: -20.0, y: 0.0, z: -20.0}, to = {x: 20.0, y: 0.3, z: 20.0},
 			sideColors = {front: [1, 1, 0, 1], right: [1, 1, 0, 1], back: [1, 1, 0, 1],
 			left: [1, 1, 0, 1], bottom: [1, 1, 0, 1], top: [1, 1, 0, 1]}));
 	
 		// Palmenstamm 3.1
-		for (i = 0.6; i < 3.1; i += 0.6) {
+		for (i = 0.6; i < 3.7; i += 0.6) {
 		objects.push(new Palm(from = {x: -0.2, y: 0.0 , z: -0.2}, to = {x: 0.2, y: i +0.3 , z: 0.2},
 			sideColors = {front: [0.5, 0.3, 0, 1], right: [0.5, 0.3, 0, 1], back: [0.5, 0.3, 0, 1],
 			left: [0.5, 0.3, 0, 1], bottom: [0.5, 0.3, 0, 1], top: [0.5, 0.3, 0, 1]}));
 		}
 	
 		// PalmenBlätter
-		for (i = 0.3 ; i < 0; i++) {
-			objects.push(new Leaf(from = {x: -0.5 , y: 2.0, z:  3 }, to = {x: 0.5, y: 3.2, z: 2},
+		for (i = 0 ; i < 361 ; i+= 45) {
+			console.log(i);
+			objects.push(new Leaf(i, from = {x: 0.0 , y: 4.0, z: 0.5 }, to = {x: 1.0, y: 5.2, z: -0.5},
 				sideColors = {front: [0, 1, 0, 1], right: [0, 1, 0, 1], back: [0, 1, 0, 1]
-			, left: [0, 1, 0, 1], bottom: [0, 1, 0, 1], top: [0, 1, 0, 1]},));
+			, left: [0, 1, 0, 1], bottom: [0, 1, 0, 1], top: [0, 1, 0, 1]}));
 		}
 	
 	// 4. Init shader program via additional function and bind it

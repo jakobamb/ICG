@@ -11,7 +11,7 @@ class Polygon {
 		this.position = {x: 0, y: 0, z: 0};
 		this.verticesVBO = gl.createBuffer();
 		
-		this.setModelMatrix(this.position, this.orientation);
+		
 
 
 	}
@@ -33,6 +33,18 @@ class Polygon {
 	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.x, [1, 0, 0]);
 	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.y, [0, 1, 0]);
 	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.z, [0, 0, 1]);
+}
+
+setModelMatrixLeaf (position, orientation) {
+	// Convert the orientation to RAD
+	orientation = {x: degToRad(orientation.x), y: degToRad(orientation.y), z: degToRad(orientation.z)};
+
+	// Set the transformation matrix
+	this.modelMatrix = mat4.create();
+	mat4.translate(this.modelMatrix, this.modelMatrix, [position.y, position.x, position.z]);
+	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.x, [0, 0, 1]);
+	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.y, [0, 1, 0]);
+	mat4.rotate(this.modelMatrix, this.modelMatrix, orientation.z, [1, 0, 0]);
 }
 
 
@@ -71,4 +83,7 @@ class Polygon {
 		// Draw the object
 		gl.drawArrays(gl.TRIANGLES, 0, this.mesh.length/3);
 	}
+
+
+
 }

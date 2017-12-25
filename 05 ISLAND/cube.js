@@ -4,6 +4,7 @@ class Cube extends Polygon {
 		,scfront, scright, scback, scleft, scbottom, sctop) {
 		super(fx,fy,fz,tx,ty,tz
 			,scfront, scright, scback, scleft, scbottom, sctop);
+			this.setModelMatrix(this.position, this.orientation);
 		this.makeCube();
 		this.initBuffer();
 	}

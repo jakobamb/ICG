@@ -7,6 +7,7 @@ class Polygon {
 		this.sideColors = sideColors;
 		this.mesh = [];
 		this.colors = [];
+		this.normals = [];
 		this.orientation = {x: 0, y: 0, z: 0};
 		this.position = {x: 0, y: 0, z: 0};
 		this.verticesVBO = gl.createBuffer();
@@ -54,7 +55,8 @@ setModelMatrixLeaf (position, orientation) {
 	initBuffer () {
 		gl.useProgram(program);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.colors)), gl.STATIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(
+			this.mesh.concat(this.colors.concat(normals))), gl.STATIC_DRAW);
 	}
 
 	/**
@@ -74,8 +76,11 @@ setModelMatrixLeaf (position, orientation) {
 		// Set attribute pointers and enable them
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, this.mesh.length*4);
+		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0
+			, (this.mesh.length*4 +this.colors.length); //?
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(colorLoc);
+		gl.enableVertexAttribArray(normalLoc);
 
 		// Set uniforms
 		this.updateBuffer();

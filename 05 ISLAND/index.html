@@ -7,10 +7,34 @@
 		<script id="vertex-shader" type="x-shader/x-vertex">
 			attribute vec4 vPosition;
 			attribute vec4 vColor;
-			
+			attribute vec vNormal;
+
+			attribute float distance
+
+			attribute float fatti;
+
 			uniform mat4 modelMatrix;
 			uniform mat4 viewMatrix;
 			uniform mat4 projectionMatrix;
+
+			uniform vec4 lichtPosition
+			uniform vec4 vertexPosition
+			uniform vec4 vertexNormale
+
+			uniform vec4 ambienterKoeffzient
+			uniform vec4 ambienterIntensität
+
+			uniform vec4 spekulareKoeffzient
+			uniform vec4 spekulareIntensität
+			uniform vec4 spekularerExponent
+
+			uniform vec4 diffuseKoeffzient
+			uniform vec4 diffuseIntensität
+
+			//für denn fatti Wert
+			uniform float c_1 
+			uniform float c_2
+			uniform float c_3
 
 			varying vec4 fColor;
 			void main()

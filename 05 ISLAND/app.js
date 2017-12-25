@@ -10,7 +10,8 @@ let objects = [];
 let program;
 
 let pointLoc,
-	colorLoc;
+	colorLoc,
+	normalLoc;
 	
 let modelMatrixLoc;
 
@@ -78,6 +79,7 @@ function init() {
 	// 7 Save attribute location to address them
 	pointLoc = gl.getAttribLocation(program, "vPosition");
 	colorLoc = gl.getAttribLocation(program, "vColor");
+	normalLoc = gl.getAttribLocation(program, "vNormal"); 
 	modelMatrixLoc = gl.getUniformLocation(program, "modelMatrix");
 
     // Set view matrix

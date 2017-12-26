@@ -7,50 +7,66 @@
 		<script id="vertex-shader" type="x-shader/x-vertex">
 			attribute vec4 vPosition;
 			attribute vec4 vColor;
-			attribute vec vNormal;
-
-			attribute float distance
-
-			attribute float fatti;
-
+			attribute vec4 vNormal;
+						
 			uniform mat4 modelMatrix;
 			uniform mat4 viewMatrix;
 			uniform mat4 projectionMatrix;
 
-			uniform vec4 lichtPosition
-			uniform vec4 vertexPosition
-			uniform vec4 vertexNormale
+	/*
+			attribute float distance;
 
-			uniform vec4 ambienterKoeffzient
-			uniform vec4 ambienterIntensität
+			attribute float fatti;
+			
 
-			uniform vec4 spekulareKoeffzient
-			uniform vec4 spekulareIntensität
-			uniform vec4 spekularerExponent
+			uniform vec4 lichtPosition;
+			uniform vec4 vertexPosition;
+			uniform vec4 vertexNormale;
 
-			uniform vec4 diffuseKoeffzient
-			uniform vec4 diffuseIntensität
+			uniform vec4 ambienterKoeffzient;
+			uniform vec4 ambienterIntensität;
+
+			uniform vec4 spekulareKoeffzient;
+			uniform vec4 spekulareIntensität;
+			uniform vec4 spekularerExponent;
+
+			uniform vec4 diffuseKoeffzient;
+			uniform vec4 diffuseIntensität;
 
 			//für denn fatti Wert
-			uniform float c_1 
-			uniform float c_2
-			uniform float c_3
+			uniform float c_1 ;
+			uniform float c_2;
+			uniform float c_3;
+ */
 
 			varying vec4 fColor;
+			varying vec4 fNormals;
+			
 			void main()
 			{
 				fColor = vColor;
+				fNormals = modelMatrix * vNormal;
 				gl_Position = projectionMatrix * viewMatrix * modelMatrix * vPosition;
+
+
+			//	lichtPos = projectionMatrix * viewMatrix * lichtPosition;
+			//	vertexPos = projectionMatrix * viewMatrix * modelMatrix * vertexPosition;
+				
+
+
 			}
 		</script>
 		<script id="fragment-shader" type="x-shader/x-fragment">
 			precision mediump float;
 			
 			varying vec4 fColor;
+			varying vec4 fNormals;
 			
 			void main()
 			{					
-				gl_FragColor = fColor;
+				gl_FragColor = fNormals;
+				//gl_FragColor = fColor;
+
 			}
 		</script>
 

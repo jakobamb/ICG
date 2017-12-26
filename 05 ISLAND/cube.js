@@ -8,6 +8,12 @@ class Cube extends Polygon {
 		this.makeCube();
 		this.getNormals(this.mesh);
 		this.initBuffer();
+		
+		
+		
+		
+		
+		
 	}
 	
 

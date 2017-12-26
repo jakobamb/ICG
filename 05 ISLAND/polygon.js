@@ -74,7 +74,7 @@ setModelMatrixLeaf (position, orientation) {
 		gl.vertexAttribPointer(pointLoc, 3, gl.FLOAT, false, 0, 0);
 		gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, this.mesh.length*4);
 		gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0
-			, (this.mesh.length*4 +this.colors.length)); //?
+			, (this.mesh.length*4 + this.colors.length)); //?
 		gl.enableVertexAttribArray(pointLoc);
 		gl.enableVertexAttribArray(colorLoc);
 		gl.enableVertexAttribArray(normalLoc);
@@ -87,41 +87,51 @@ setModelMatrixLeaf (position, orientation) {
 	}
 
 
+	//nimmt Mesh als input und gibt für jeden der Polygone die einzelenen normalen für alle 3 Koordianten in nem Array zurück
 	getNormals (meshArray) {
 
 		var vertexVectors =[];
 		var normalVectors = [];
 		var normalsArray = [];
 
+		// erstellt Vektor für je 3 Meshkordinaten
 		for (let i = 0; i < meshArray.length; i += 3) {
 			var vector = vec3.fromValues(meshArray[i],meshArray[i+1], meshArray[i+2]);
 			vertexVectors.push(vector);
+						
 		}
-		
+
+
+		//findet NormalenVektor für die Vektoren jedes einzelnen Vertecies
 	 for (let j = 0; j < vertexVectors.length; j+= 3) {
 
-		 var vector1 = vec3.create();
+		 let vector1 = vec3.create();
 		 vec3.subtract(vector1, vertexVectors[j], vertexVectors[j+1]);
-		
-		
 
-		 var vector2 = vec3.create();
+		 let vector2 = vec3.create();
 		 vec3.subtract(vector2, vertexVectors[j], vertexVectors[j+2]);
 		 
-		 var normal = vec3.create();
-		 vec3.cross(normal ,vector1, vector2)
-		 normalVectors.push(normal)
-		
+		 let normal = vec3.create();
+		 vec3.cross(normal ,vector1, vector2);
+
+		 normalVectors.push(normal);
 	 }
+
+
+	 // gibt einzelne x y z Vektoren nomralisiert im normalsArray zurück
 	 for (let j = 0; j < normalVectors.length; j++) {
-		 
+
 		vec3.normalize(normalVectors[j], normalVectors[j]);
 
+		normalsArray.push(normalVectors[j][0]);
 
-		normalsArray.push(normalVectors[j].x);
-		normalsArray.push(normalVectors[j].y);
-		normalsArray.push(normalVectors[j].z);
+		normalsArray.push(normalVectors[j][1]);
+
+		normalsArray.push(normalVectors[j][2]);
+
+
 	 }
+
 	 this.normals = normalsArray;
 	 }
 

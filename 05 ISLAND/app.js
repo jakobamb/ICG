@@ -66,7 +66,6 @@ function init() {
 	
 		// PalmenBlätter
 		for (i = 0 ; i < 361 ; i+= 45) {
-			console.log(i);
 			objects.push(new Leaf(i, from = {x: 0.0 , y: 4.0, z: 0.5 }, to = {x: 1.0, y: 5.2, z: -0.5},
 				sideColors = {front: [0, 1, 0, 1], right: [0, 1, 0, 1], back: [0, 1, 0, 1]
 			, left: [0, 1, 0, 1], bottom: [0, 1, 0, 1], top: [0, 1, 0, 1]}));

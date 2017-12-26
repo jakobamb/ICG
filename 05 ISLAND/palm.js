@@ -8,6 +8,7 @@ class Palm extends Polygon {
 			,scfront, scright, scback, scleft, scbottom, sctop);
 			this.setModelMatrix(this.position, this.orientation);
 		this.makePalm(0.4);
+		this.getNormals(this.mesh);
 		this.initBuffer();
 	}
 
@@ -80,11 +81,10 @@ class Leaf extends Polygon {
     ,scfront, scright, scback, scleft, scbottom, sctop) {
 		super(fx,fy,fz,tx,ty,tz
 			,scfront, scright, scback, scleft, scbottom, sctop);
-		console.log(rotation);
-		
 		this.orientation = {x: 0, y: rotation, z: 0};
 		this.setModelMatrixLeaf(this.position, this.orientation);
 		this.makeLeaf();
+		this.getNormals(this.mesh);
 		this.initBuffer();
 	}
 

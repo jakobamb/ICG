@@ -11,11 +11,8 @@ class Polygon {
 		this.orientation = {x: 0, y: 0, z: 0};
 		this.position = {x: 0, y: 0, z: 0};
 		this.verticesVBO = gl.createBuffer();
-		
-		
-
-
 	}
+
 
 	/**
 	 * Sets the model matrix
@@ -56,7 +53,7 @@ setModelMatrixLeaf (position, orientation) {
 		gl.useProgram(program);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(
-			this.mesh.concat(this.colors.concat(normals))), gl.STATIC_DRAW);
+			this.mesh.concat(this.colors.concat(this.normals))), gl.STATIC_DRAW);
 	}
 
 	/**
@@ -90,5 +87,49 @@ setModelMatrixLeaf (position, orientation) {
 	}
 
 
+	getNormals (meshArray) {
 
-}
+		var vertexVectors =[];
+		var normalVectors = [];
+		var normalsArray = [];
+
+		for (let i = 0; i < meshArray.length; i += 3) {
+			var vector = vec3.fromValues(meshArray[i],meshArray[i+1], meshArray[i+2]);
+			vertexVectors.push(vector);
+		}
+		
+	 for (let j = 0; j < vertexVectors.length; j+= 3) {
+
+		 var vector1 = vec3.create();
+		 vec3.subtract(vector1, vertexVectors[j], vertexVectors[j+1]);
+		
+		
+
+		 var vector2 = vec3.create();
+		 vec3.subtract(vector2, vertexVectors[j], vertexVectors[j+2]);
+		 
+		 var normal = vec3.create();
+		 vec3.cross(normal ,vector1, vector2)
+		 normalVectors.push(normal)
+		
+	 }
+	 for (let j = 0; j < normalVectors.length; j++) {
+		 
+		vec3.normalize(normalVectors[j], normalVectors[j]);
+
+
+		normalsArray.push(normalVectors[j].x);
+		normalsArray.push(normalVectors[j].y);
+		normalsArray.push(normalVectors[j].z);
+	 }
+	 this.normals = normalsArray;
+	 }
+
+	}
+
+	/*
+
+ vec3.add(normalVectors[indices[j]], normalVectors[indices[j]],normal);
+		 vec3.add(normalVectors[indices[j+1]], normalVectors[indices[j+1]],normal);
+		 vec3.add(normalVectors[indices[j+2]], normalVectors[indices[j+1]],normal);
+	*/

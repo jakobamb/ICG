@@ -14,7 +14,7 @@ class Polygon {
 	}
 
 
-	/**
+	/** 
 	 * Sets the model matrix
 	 * @param {Object} position x,y,z
 	 * @param {Object} orientation x,y,z - angles in degree

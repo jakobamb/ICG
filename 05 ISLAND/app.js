@@ -11,7 +11,10 @@ let program;
 
 let pointLoc,
 	colorLoc,
-	normalLoc;
+	normalLoc,
+	sunPosLoc,
+	sunColLoc,
+	ambienteInt;
 	
 let modelMatrixLoc;
 
@@ -81,6 +84,12 @@ function init() {
 	normalLoc = gl.getAttribLocation(program, "vNormal"); 
 	modelMatrixLoc = gl.getUniformLocation(program, "modelMatrix");
 
+	//Lichtinfromationen
+	ambienteInt = gl.getUniformLocation(program, "ambienLightIntensity");
+	sunPosLoc = gl.getUniformLocation(program, "direction");
+	sunColLoc = gl.getUniformLocation(program, "color");
+
+
     // Set view matrix
 	eye = vec3.fromValues(0, 2, 9.0);
 	target = vec3.fromValues(eye[0], eye[1], eye[2] - 1);
@@ -100,6 +109,11 @@ function init() {
 	// 7 Save uniform location and save the projection matrix into it
 	projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
 	gl.uniformMatrix4fv(projectionMatrixLoc, false, projectionMatrix);
+
+	//Set Light
+	gl.uniform4f(ambienteInt, 5.0, 5.0, 5.0, 5.0); //kp wieso es so sien muss
+	gl.uniform4f(sunPosLoc, 0.2, 0.3, 0.6, 0.4);
+	gl.uniform4f(sunColLoc, 0.7, 0.6, 0.4, 1.0);
 
 	//initialize controller
 	initController();

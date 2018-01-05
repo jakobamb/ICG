@@ -5,6 +5,10 @@
 		<title>Zettel 6 - Aufgabe 1</title>
 		
 		<script id="vertex-shader" type="x-shader/x-vertex">
+
+
+
+
 			attribute vec4 vPosition;
 			attribute vec4 vColor;
 			attribute vec4 vNormal;
@@ -13,59 +17,89 @@
 			uniform mat4 viewMatrix;
 			uniform mat4 projectionMatrix;
 
-	/*
-			attribute float distance;
+			const vec4 k_a = vec4(0.2,0.2,0.2,1.0);
+			const vec4 k_d = vec4(0.8,1.0,0.8,1.0);
+			const vec4 k_s = vec4(0.3,0.2,0.4,1.0);
 
-			attribute float fatti;
-			
+			const vec4 I_d = vec4(0.1,0.1,0.5, 1.0);
+			const vec4 I_s = vec4(1.0,0.1,1.0, 1.0);
 
-			uniform vec4 lichtPosition;
-			uniform vec4 vertexPosition;
-			uniform vec4 vertexNormale;
-
-			uniform vec4 ambienterKoeffzient;
-			uniform vec4 ambienterIntensität;
-
-			uniform vec4 spekulareKoeffzient;
-			uniform vec4 spekulareIntensität;
-			uniform vec4 spekularerExponent;
-
-			uniform vec4 diffuseKoeffzient;
-			uniform vec4 diffuseIntensität;
 
 			//für denn fatti Wert
-			uniform float c_1 ;
-			uniform float c_2;
-			uniform float c_3;
- */
+			const float c_1 = 1.0;
+			const float c_2 = 0.00005;
+			const float c_3 = 0.00000002;
+
+
+			const float n = 4.0;
+ 
+			uniform vec4 direction;
+			uniform vec4 color;
+			uniform vec4 ambienLightIntensity;
+
 
 			varying vec4 fColor;
 			varying vec4 fNormals;
+			varying vec4 lightIntensity;
+			varying vec4 lightDirection;
+			varying vec4 reflectedLight;
+			varying vec4 reflectedCamPos;
+
+			varying float distance;
+			varying float fatti;
+
 			
+
 			void main()
 			{
-				fColor = vColor;
-				fNormals = modelMatrix * vNormal;
-				gl_Position = projectionMatrix * viewMatrix * modelMatrix * vPosition;
+				//eig fNormals = normalize(projectionMatrix * viewMatrix * modelMatrix * vNormal); für kamcord
+				//sieht aber nur nach ambient aus 
+				fNormals = vNormal ;
 
+				lightDirection = normalize(projectionMatrix * viewMatrix * direction);
+				reflectedLight = normalize(reflect(lightDirection, fNormals));
 
-			//	lichtPos = projectionMatrix * viewMatrix * lichtPosition;
-			//	vertexPos = projectionMatrix * viewMatrix * modelMatrix * vertexPosition;
+				reflectedCamPos = normalize(vec4(-1.0, -1.0, -1.0, -1.0) * viewMatrix);
 				
+				distance = length(lightDirection);
+				
+				fatti = min(1.0 / (c_1 + (c_2 * distance) + (c_3 + pow(distance, 2.0))), 1.0);
+
+				lightIntensity = ambienLightIntensity * k_a + fatti *
+								(I_d * k_d * max(0.0, dot(fNormals, lightDirection))
+								+ I_s * k_s * pow(max(0.0, dot(reflectedLight, reflectedCamPos)), n));
 
 
+				fColor = vColor * lightIntensity;
+				
+				gl_Position = (projectionMatrix * viewMatrix * modelMatrix * vPosition) ;
 			}
 		</script>
 		<script id="fragment-shader" type="x-shader/x-fragment">
 			precision mediump float;
 			
 			varying vec4 fColor;
+
+			/*
 			varying vec4 fNormals;
+
+			struct DirectionalLight {
+			vec4 direction;
+			vec4 color;
+			} 
+
+			uniform vec4 direction;
+			uniform vec4 color;
+			uniform vec4 ambienLightIntensity;
 			
+			*/
+
 			void main()
-			{					
-				gl_FragColor = fNormals;
-				//gl_FragColor = fColor;
+			{				
+
+			//	vec4 lightIntensity = ambienLightIntensity + color * max(dot(fNormals, direction), 0.0);
+			
+				gl_FragColor = fColor; //* lightIntensity;
 
 			}
 		</script>

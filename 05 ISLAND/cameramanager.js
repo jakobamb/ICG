@@ -1,5 +1,4 @@
-const speed = 0.08;
-const sensitivity = 0.04;
+const speed = 0.06;
 
 let keyPressed = {
 	KeyW: false,
@@ -71,6 +70,6 @@ function keyup(e)
 
 function changeView(e)
 {
-	vec3.rotateY(target, target, eye, -e.movementX * sensitivity);
+	vec3.rotateY(target, target, eye, -e.movementX * speed);
 	mat4.lookAt(viewMatrix, eye, target, up);
 }

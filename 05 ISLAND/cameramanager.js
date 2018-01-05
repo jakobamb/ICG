@@ -1,4 +1,5 @@
-const speed = 0.06;
+const SPEED = 0.08;
+const SENSITIVITY = 0.03;
 
 let keyPressed = {
 	KeyW: false,
@@ -20,9 +21,9 @@ function initController() {
 
 function update()
 {
-	let look = [(target[0] - eye[0]) * speed,
-				(target[1] - eye[1]) * speed,
-				(target[2] - eye[2]) * speed];
+	let look = [(target[0] - eye[0]) * SPEED,
+				(target[1] - eye[1]) * SPEED,
+				(target[2] - eye[2]) * SPEED];
 	
 	/* 
 	 *	Using gl-matrix:
@@ -70,6 +71,6 @@ function keyup(e)
 
 function changeView(e)
 {
-	vec3.rotateY(target, target, eye, -e.movementX * speed);
+	vec3.rotateY(target, target, eye, -e.movementX * SENSITIVITY);
 	mat4.lookAt(viewMatrix, eye, target, up);
 }

@@ -5,24 +5,20 @@
 		<title>Zettel 6 - Aufgabe 1</title>
 		
 		<script id="vertex-shader" type="x-shader/x-vertex">
-
-
-
-
+			//vertex buffer
 			attribute vec4 vPosition;
 			attribute vec4 vColor;
 			attribute vec4 vNormal;
-						
+
+			//transformation matrix			
 			uniform mat4 modelMatrix;
 			uniform mat4 viewMatrix;
 			uniform mat4 projectionMatrix;
 
+			//material
 			const vec4 k_a = vec4(0.5,0.5,0.5,1.0);
 			const vec4 k_d = vec4(0.8,0.8,0.8,1.0);
 			const vec4 k_s = vec4(0.2,0.2,0.2,1.0);
-
-			const vec4 I_d = vec4(0.9,0.9,0.9,1.0);
-			const vec4 I_s = vec4(1.0,1.0,1.0,1.0);
 
 			//für denn fatti Wert
 			const float c_1 = 0.6;
@@ -30,11 +26,14 @@
 			const float c_3 = 0.00000002;
 
 			const float n = 4.0;
- 
-			uniform vec4 lightPos;
-			uniform vec4 lightColor;
 			uniform vec4 ambientLightInt;
 
+			//sun
+			uniform vec4 sunPos;
+			uniform vec4 sunDiffuse;
+			uniform vec4 sunSpecular;
+
+			//vars
 			varying vec4 fColor;
 			varying vec4 lightIntensity;
 
@@ -54,13 +53,13 @@
 
 				gl_Position = projectionMatrix * position;
 				
-				vec4 LightPos = modelViewMatrix * lightPos;
+				vec4 sunPos = modelViewMatrix * sunPos;
 
 				vec4 Noo =  vec4(1.0, 1.0, 1.0, 0.0) * vNormal;
 
 				N = normalize(modelViewMatrix * Noo) + vec4(0.0, 0.0, 0.0, 1.0);
 
-				L = position - LightPos;
+				L = position - sunPos;
 				vec4 Lnorm = normalize(L * vec4(1.0 ,1.0 ,1.0 ,0.0) + vec4(0.0, 0.0, 0.0, 1.0));
 
 				R = reflect(Lnorm, N);
@@ -72,10 +71,10 @@
 				fatti = min(1.0 / (c_1 + (c_2 * distance) + (c_3 + pow(distance, 2.0))), 1.0);
 
 				lightIntensity = ambientLightInt * k_a + 0.5 *
-								(I_d * k_d * max(0.0, dot(N, Lnorm))
-								+ I_s * k_s * pow(max(0.0, dot(R, V)), n));
+								(sunDiffuse * k_d * max(0.0, dot(N, Lnorm))
+								+ sunSpecular * k_s * pow(max(0.0, dot(R, V)), n));
 
-				fColor = vColor * lightIntensity ;
+				fColor = vColor * lightIntensity;
 
 			}
 		</script>

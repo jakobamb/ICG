@@ -51,6 +51,7 @@
 
 			uniform sampler2D diffuseMap;
 			// TODO: Füge Normal Map als uniforme Variable hinzu.
+			uniform sampler2D normalMap;
 
 			const float c1 = 1.0;
 			const float c2 = 0.0005;
@@ -64,11 +65,24 @@
 			
 			void main()
 			{				
-				// TODO:Berechne Normale, Tangente und Binormale im Kameraraum (der Code findet sich in den Übungsfolien vom 11.01.).		
+				// TODO:Berechne Normale, Tangente und Binormale im Kameraraum (der Code findet sich in den Übungsfolien vom 11.01.).
+				vec3 tangent;
+				vec3 t1 = cross(fNormal.xyz, vec3(0.0, 0.0, 1.0));
+				vec3 t2 = cross(fNormal.xyz, vec3(0.0, 1.0, 0.0));
+				if (length(t1) > length(t2)) {
+					tangent = normalize(t1);
+				} else {
+					tangent = normalize(t2);
+				}
+				vec3 n = normalize((normalMatrix * fNormal).xyz);
+				vec3 t = normalize((normalMatrix * vec4(tangent, 1.0)).xyz);
+				vec3 b = cross(n, t);
 
 				// Calculate and normalize N, L, V and R
 				// TODO: Lese Normale aus Normal Map aus, verschiebe ihren Wertebereich und transformiere sie anschließend mit der TBN-Matrix in den Tangentenraum. (Kommentiere hiezu zunächst die folgende Zeile aus.)							
-				vec3 N = normalize((normalMatrix * fNormal).xyz);
+				//vec3 N = normalize((normalMatrix * fNormal).xyz);
+				vec4 normalMapVals = texture2D(normalMap, fTexCoord) * 2.0 - 1.0;
+				//TODO: Hier fortfahren..
 
 				vec3 L = normalize((lightPos - position).xyz);
 				vec3 V = normalize((-position).xyz);
@@ -95,7 +109,7 @@
 	</head>
 	<body>
 
-		<canvas id="gl-canvas" width="512" height="512">
+		<canvas id="gl-canvas" width="1024" height="512">
 			If you see this, your browser doesn't support WebGL.
 		</canvas>
 

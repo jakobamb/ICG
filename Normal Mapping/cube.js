@@ -328,11 +328,15 @@ class Cube {
 
 function initTextures() {
     sandTexture = gl.createTexture();
-    sandImage = new Image();
-    sandImage.onload = function () { handleTextureLoaded(sandImage, sandTexture); }
+    let sandImage = new Image();
+    sandImage.onload = () => handleTextureLoaded(sandImage, sandTexture);
     sandImage.src = "sand_diffuse.jpg";
 
-    // TODO: Erstelle analog zu diffuser Textur eine Normal Map für den Sand.
+	// TODO: Erstelle analog zu diffuser Textur eine Normal Map für den Sand.
+	sandNormalTexture = gl.createTexture();
+	let sandNormalImage = new Image();
+	sandNormalImage.onload = () => handleTextureLoaded(sandNormalImage, sandNormalTexture);
+	sandNormalImage.src = "sand_normal.jpg"
 }
 
 function handleTextureLoaded(image, texture) {
@@ -348,7 +352,6 @@ function handleTextureLoaded(image, texture) {
  * Initializes the program, models and shaders
  */
 function init() {
-
 	// 1. Get canvas and setup WebGL context
     canvas = document.getElementById("gl-canvas");
 	gl = canvas.getContext('webgl');
@@ -440,6 +443,8 @@ function render()
 	gl.uniform1i(diffuseMapLoc, 0);
 
 	// TODO: Verknüpfe Normal Map analog zu diffuser Map mit Shader.
+	gl.activeTexture(gl.TEXTURE1);
+	gl.bindTexture(gl.TEXTURE_2D, sandNormalTexture);
 
 	// Call every render function
     objects.forEach(function(object) {

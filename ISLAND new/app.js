@@ -136,9 +136,8 @@ function init() {
 	gl.uniform4fv(IdLoc, [0.5, 0.5, 0.5, 1.0]);
 	gl.uniform4fv(IsLoc, [0.7, 0.7, 0.7, 1.0]);
 	
-	document.addEventListener("keydown", keydown);
-	document.addEventListener("keyup", keyup);
-	document.addEventListener("mousemove", changeView);
+	initController();
+	
 	canvas.onmousedown = function() {
         canvas.requestPointerLock();
 	}
@@ -222,22 +221,6 @@ function gameLoop()
 	update();
 	render();
 	requestAnimationFrame(gameLoop);
-}
-
-function keydown(e) 
-{
-	keyPressed[e.code] = true;
-}
-
-function keyup(e) 
-{
-	keyPressed[e.code] = false;
-}
-
-function changeView(e)
-{
-	vec3.rotateY(target, target, eye, -e.movementX * speed);
-	mat4.lookAt(viewMatrix, eye, target, up);
 }
 
 init ();

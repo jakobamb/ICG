@@ -272,6 +272,10 @@ class Cube {
 	}
 }
 
+/**
+ * 
+ * @param {array} objects The scene object Array
+ */
 function makePalm(objects) {
     //create trunk
     let trunk = new Cube({x: 0.1, y: -0.5, z: 0.1}, {x: -0.1, y: 1.0, z: -0.1}, {r: 0.25, g: 0.15, b: 0.15, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0});

@@ -144,16 +144,12 @@ function init() {
 	}
 
 	// 3. Specify vertices
-	let cube1 = new Cube({x: -2, y: -1, z: -2}, {x: 2, y: -0.5, z: 2}, {r: 0.3, g: 0.0, b: 0.0, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0});
-	objects.push(cube1);
+	let ground = new Cube({x: -2, y: -1, z: -2}, {x: 2, y: -0.5, z: 2}, {r: 0.5, g: 0.4, b: 0.4, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0});
+	let water = new Cube({x: -10, y: -1.5, z: -10}, {x: 10, y: -1, z: 10}, {r: 0.1, g: 0.3, b: 0.9, a: 1.0}, {r: 0.2, g: 0.3, b: 1.0, a: 1.0}, {r: 1.0, g: 0.9, b: 0.9, a: 1.0});
 
-	let cube2 = new Cube({x: -0.5, y: -0.5, z: -0.5}, {x: 0.5, y: 0.5, z: 0.5}, {r: 0.0, g: 0.3, b: 0.0, a: 1.0}, {r: 0.0, g: 0.5, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0});
-	cube2.SetTransform({x: -0.5, y: 0, z: -1}, {x: 180, y: 45, z: 90});
-	objects.push(cube2);
+	objects.push(water,ground);
 
-	let cube3 = new Cube({x: -0.5, y: -0.5, z: -0.5}, {x: 0.5, y: 0.5, z: 0.5}, {r: 0.0, g: 0.0, b: 0.3, a: 1.0}, {r: 0.0, g: 0.0, b: 0.5, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0});
-	cube3.SetTransform({x: 0.5, y: 1, z: 0}, {x: 0, y: 0, z: 45});
-	objects.push(cube3);
+	makePalm(objects);
 
 	// 8. Render
 	gameLoop();

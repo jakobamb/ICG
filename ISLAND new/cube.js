@@ -271,3 +271,14 @@ class Cube {
 		gl.drawArrays(gl.TRIANGLES, 0, this.mesh.length/3);
 	}
 }
+
+function makePalm(objects) {
+    //create trunk
+    let trunk = new Cube({x: 0.1, y: -0.5, z: 0.1}, {x: -0.1, y: 1.0, z: -0.1}, {r: 0.25, g: 0.15, b: 0.15, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0});
+    objects.push(trunk);
+    //create leafs
+    objects.push(new Cube({x: 0.0, y: 1.0, z: 0.0}, {x: 1, y: 1.05, z: 0.2}, {r: 0.2, g: 0.5, b: 0.2, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0}));
+    objects.push(new Cube({x: 0.0, y: 1.0, z: 0.0}, {x: -1, y: 1.05, z: -0.2}, {r: 0.2, g: 0.5, b: 0.2, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0}));
+    objects.push(new Cube({x: 0.0, y: 1.0, z: 0.0}, {x: 0.2, y: 1.05, z: 1}, {r: 0.2, g: 0.5, b: 0.2, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0}));
+    objects.push(new Cube({x: 0.0, y: 1.0, z: 0.0}, {x: -0.2, y: 1.05, z: -1}, {r: 0.2, g: 0.5, b: 0.2, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0}));
+}

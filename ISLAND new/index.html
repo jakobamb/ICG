@@ -21,6 +21,8 @@
 
 			varying vec2 fTexCoord;
 
+			uniform bool isWater; 
+
 			void main()
 			{
 				// Calculate positions in camera coordinates
@@ -32,6 +34,10 @@
 
 				// Pass tex coords to fragment shader
                 fTexCoord = vTexCoord;
+				
+				if (isWater) {
+
+				}
 				
 				gl_Position = projectionMatrix * position;
 			}
@@ -115,7 +121,10 @@
 			If you see this, your browser doesn't support WebGL.
 		</canvas>
 
+
+		<script type="text/javascript" src="plane.js"></script>
 		<script type="text/javascript" src="cube.js"></script>
+		<script type="text/javascript" src="ocean.js"></script>
 		<script type="text/javascript" src="controller.js"></script>
 		<script type="text/javascript" src="app.js"></script>
 		

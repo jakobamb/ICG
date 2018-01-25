@@ -166,6 +166,7 @@ function render()
 	// TODO: Verknüpfe Normal Map analog zu diffuser Map mit Shader.
 	gl.activeTexture(gl.TEXTURE1);
 	gl.bindTexture(gl.TEXTURE_2D, sandNormalTexture);
+	gl.uniform1i(normalMapLoc, 1);
 
 	// Call every render function
     objects.forEach(function(object) {

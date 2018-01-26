@@ -14,7 +14,7 @@ class Plane {
 		this.verticesVBO = gl.createBuffer();
 		this.modelMatrix;
 		this.normalMatrix;
-
+		this.isWater = false;
 
 		this.SetTransform(this.position, this.orientation);
 		this.MakeModel();
@@ -82,7 +82,6 @@ class Plane {
 		this.normalMatrix = mat4.create();
 		mat4.transpose(this.normalMatrix, modelViewMatrix);
 		mat4.invert(this.normalMatrix, this.normalMatrix);
-
 	}
 
 	/**
@@ -91,7 +90,6 @@ class Plane {
 	InitBuffer () {
 		gl.useProgram(program);
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
-
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.mesh.concat(this.normals.concat(this.textureCoordinates))), gl.STATIC_DRAW);
 	}
 
@@ -111,12 +109,12 @@ class Plane {
 		gl.uniform4fv(kdLoc, Object.values(this.kd));
 		gl.uniform4fv(ksLoc, Object.values(this.ks));
 		gl.uniform1f(specularExponentLoc, this.specularExponent);
+
 		//flag for planes as ocean parts
-		gl.uniform1i(isWater, (this.isWater ? 1 : 0));
+		gl.uniform1i(isWaterLoc, (this.isWater ? 1 : 0));
 	}
 
 	Render () {
-		
 		// Bind the program and the vertex buffer object
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 

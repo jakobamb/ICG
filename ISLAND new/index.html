@@ -27,6 +27,7 @@
 			{
 				// Calculate positions in camera coordinates
 				lightPos = viewMatrix * vec4(lightPosition, 1);
+
 				position = viewMatrix * modelMatrix * vPosition;
 
 				// Pass normals to fragment shader
@@ -36,7 +37,7 @@
                 fTexCoord = vTexCoord;
 				
 				if (isWater) {
-
+					position.y = position.y + (sin(vPosition.x) + sin(vPosition.z)) * 0.2;
 				}
 				
 				gl_Position = projectionMatrix * position;
@@ -56,7 +57,6 @@
 			uniform mat4 normalMatrix;
 
 			uniform sampler2D diffuseMap;
-			// TODO: Füge Normal Map als uniforme Variable hinzu.
 			uniform sampler2D normalMap;
 
 			const float c1 = 1.0;
@@ -71,7 +71,7 @@
 			
 			void main()
 			{				
-				// TODO:Berechne Normale, Tangente und Binormale im Kameraraum (der Code findet sich in den Übungsfolien vom 11.01.).
+				//Berechne Normale, Tangente und Binormale im Kameraraum
 				vec3 tangent;
 				vec3 t1 = cross(fNormal.xyz, vec3(0.0, 0.0, 1.0));
 				vec3 t2 = cross(fNormal.xyz, vec3(0.0, 1.0, 0.0));
@@ -86,11 +86,10 @@
 				mat3 tbnMat = mat3(t,b,n);
 
 				// Calculate and normalize N, L, V and R
-				// TODO: Lese Normale aus Normal Map aus, verschiebe ihren Wertebereich und transformiere sie anschließend mit der TBN-Matrix in den Tangentenraum (in die Weltkoordinaten???).						
-				//vec3 N = normalize((normalMatrix * fNormal).xyz);
+				// TODO: Lese Normale aus Normal Map aus, verschiebe ihren Wertebereich 
+				//und transformiere sie anschließend mit der TBN-Matrix in die Weltkoordinaten.						
 				vec3 normalMapVals = texture2D(normalMap, fTexCoord).xyz * 2.0 - 1.0;
 				vec3 N = normalMapVals * tbnMat;
-				//TODO: Hier fortfahren..
 
 				vec3 L = normalize((lightPos - position).xyz);
 				vec3 V = normalize((-position).xyz);

@@ -46,8 +46,6 @@ let sandTexture,
 let diffuseMapLoc,
 	normalMapLoc;
 
-const speed = 0.02;
-
 function degToRad (deg) {
 	return deg * Math.PI / 180;
 }
@@ -110,6 +108,8 @@ function init() {
 	ksLoc = gl.getUniformLocation(program, "ks");
 	specularExponentLoc = gl.getUniformLocation(program, "specExp");
 
+	isWaterLoc = gl.getUniformLocation(program, "isWater");
+
 	diffuseMapLoc = gl.getUniformLocation(program, "diffuseMap");
 	normalMapLoc = gl.getUniformLocation(program, "normalMap");
 
@@ -136,22 +136,21 @@ function init() {
 	gl.uniform4fv(IdLoc, [0.5, 0.5, 0.5, 1.0]);
 	gl.uniform4fv(IsLoc, [0.7, 0.7, 0.7, 1.0]);
 	
+	//initialize Controller Inputs
 	initController();
-	
-	canvas.onmousedown = function() {
-        canvas.requestPointerLock();
-	}
 
 	// 3. Specify vertices
+	//island terrain
 	let ground = new Cube({x: -2, y: -1, z: -2}, {x: 2, y: -0.5, z: 2}, {r: 0.5, g: 0.4, b: 0.4, a: 1.0}, {r: 0.5, g: 0.0, b: 0.0, a: 1.0}, {r: 1.0, g: 1.0, b: 1.0, a: 1.0});
 	objects.push(ground);
-	//let water = new Cube({x: -10, y: -1.5, z: -10}, {x: 10, y: -1, z: 10}, {r: 0.1, g: 0.3, b: 0.9, a: 1.0}, {r: 0.2, g: 0.3, b: 1.0, a: 1.0}, {r: 1.0, g: 0.9, b: 0.9, a: 1.0});
 	
+	//ocean
 	let ocean = new Ocean();
-	ocean.planeArray.forEach((plane) => {
+	ocean.objArray.forEach((plane) => {
 		objects.push(plane);
 	});
 
+	//palm
 	makePalm(objects);
 
 	// 8. Render
@@ -184,13 +183,6 @@ function update()
 				(target[1] - eye[1]) * speed,
 				(target[2] - eye[2]) * speed];
 	
-	/* 
-	 *	Using gl-matrix:
-		let look = vec3.create();
-		vec3.sub(look, target, eye);
-		vec3.scale(look, look, speed);
-	*/
-
 	if(keyPressed.KeyW) {
 		eye[0] += look[0];
 		eye[2] += look[2];
@@ -228,4 +220,4 @@ function gameLoop()
 	requestAnimationFrame(gameLoop);
 }
 
-init ();
+init();

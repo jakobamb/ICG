@@ -249,10 +249,12 @@ class Cube {
 		gl.uniform4fv(kdLoc, Object.values(this.kd));
 		gl.uniform4fv(ksLoc, Object.values(this.ks));
 		gl.uniform1f(specularExponentLoc, this.specularExponent);
+
+		//flag for ocean objects... temporary workaround since everything is in one giant shader...
+		gl.uniform1i(isWaterLoc, false);
 	}
 
-	Render () {
-		
+	Render () {	
 		// Bind the program and the vertex buffer object
 		gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesVBO);
 

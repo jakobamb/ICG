@@ -2,10 +2,17 @@
  * Handle Key and Mouse Events here
  */
 
+const speed = 0.03;
+const sensitivity = 0.015;
+
 function initController() {
     document.addEventListener("keydown", keydown);
 	document.addEventListener("keyup", keyup);
 	document.addEventListener("mousemove", changeView);
+
+	canvas.onmousedown = function() {
+        canvas.requestPointerLock();
+	}
 }
 
 function keydown(e) 
@@ -20,6 +27,6 @@ function keyup(e)
 
 function changeView(e)
 {
-	vec3.rotateY(target, target, eye, -e.movementX * speed);
+	vec3.rotateY(target, target, eye, -e.movementX * sensitivity);
 	mat4.lookAt(viewMatrix, eye, target, up);
 }

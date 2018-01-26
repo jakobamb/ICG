@@ -40,7 +40,7 @@
 				
 				if (isWater) {
 					position.y = position.y + (sin(vPosition.x + animationTime) 
-									+ sin(vPosition.z + animationTime)) * 0.1;
+									+ sin(vPosition.z + animationTime) * 0.5) * 0.15;
 				}
 				
 				gl_Position = projectionMatrix * position;

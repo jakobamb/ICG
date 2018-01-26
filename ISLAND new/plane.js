@@ -111,7 +111,7 @@ class Plane {
 		gl.uniform1f(specularExponentLoc, this.specularExponent);
 
 		//flag for planes as ocean parts
-		gl.uniform1i(isWaterLoc, (this.isWater ? 1 : 0));
+		gl.uniform1i(isWaterLoc, this.isWater);
 	}
 
 	Render () {

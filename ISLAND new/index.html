@@ -13,6 +13,8 @@
 			uniform mat4 viewMatrix;
 			uniform mat4 projectionMatrix;
 
+			uniform float animationTime;
+
 			uniform vec3 lightPosition;
 
 			varying vec4 position;
@@ -37,7 +39,8 @@
                 fTexCoord = vTexCoord;
 				
 				if (isWater) {
-					position.y = position.y + (sin(vPosition.x) + sin(vPosition.z)) * 0.2;
+					position.y = position.y + (sin(vPosition.x + animationTime) 
+									+ sin(vPosition.z + animationTime)) * 0.1;
 				}
 				
 				gl_Position = projectionMatrix * position;

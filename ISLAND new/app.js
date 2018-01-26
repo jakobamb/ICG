@@ -5,6 +5,11 @@ let gl,
 // Scene variables
 let objects = [];
 
+//time variables
+let then = 0;
+let deltaTime = 0.016699230100564844;
+let animationTime = 0;
+
 // Shader variables
 let program;
 
@@ -14,6 +19,8 @@ let pointLoc,
 
 let modelMatrixLoc,
 	normalMatrixLoc;
+
+let animationTimeLoc;
 
 let lightPositionLoc,
 	IaLoc,
@@ -99,6 +106,8 @@ function init() {
 	viewMatrixLoc = gl.getUniformLocation(program, "viewMatrix");
 	projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
 
+	animationTimeLoc = gl.getUniformLocation(program, "animationTime");
+
 	lightPositionLoc = gl.getUniformLocation(program, "lightPosition");
 	IaLoc = gl.getUniformLocation(program, "Ia");
 	IdLoc = gl.getUniformLocation(program, "Id");
@@ -166,7 +175,7 @@ function render()
 	gl.bindTexture(gl.TEXTURE_2D, sandTexture);
 	gl.uniform1i(diffuseMapLoc, 0);
 
-	// TODO: Verknüpfe Normal Map analog zu diffuser Map mit Shader.
+	// Verknüpfe Normal Map analog zu diffuser Map mit Shader.
 	gl.activeTexture(gl.TEXTURE1);
 	gl.bindTexture(gl.TEXTURE_2D, sandNormalTexture);
 	gl.uniform1i(normalMapLoc, 1);
@@ -211,10 +220,23 @@ function update()
 
 	// Set view matrix
 	gl.uniformMatrix4fv(viewMatrixLoc, false, viewMatrix);
+
+	//calculate animationTimes
+	animationTime += deltaTime * 1.3;
+	gl.uniform1f(animationTimeLoc, animationTime);
 }
 
-function gameLoop() 
+function gameLoop(now) 
 {
+	//check if now is defined (seems to be only every second frame??)
+	if (now) {
+		//convert time from milliseconds -> sec
+		now *= 0.001;
+		deltaTime = now - then;
+		//remember time for next frame
+		then = now;
+	}
+
 	update();
 	render();
 	requestAnimationFrame(gameLoop);

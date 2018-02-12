@@ -1,5 +1,5 @@
 class Ocean {
-    constructor(from = {x: -5, y: -0.8, z: -5}, to = {x: 5, z:5}, tesselationFac = 10) {
+    constructor(from = {x: -5, y: -0.8, z: -5}, to = {x: 5, z:5}, tesselationFac = 15) {
         //array that holds all the plane objects that build the ocean surface
         this.objArray = [];
 
